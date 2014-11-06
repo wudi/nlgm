@@ -1,4 +1,4 @@
--- http://sihuo.com:8080/cdn_assets/photo/201411/05/5459e306820af926411357_320x320.jpg
+-- http://domain.com/cdn_assets/photo/201411/05/5459e306820af926411357_320x320.jpg
 
 -- config
 local image_sizes = { "640x640", "320x320", "124x124", "140x140", "64x64", "60x60", "32x32" }
