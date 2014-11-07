@@ -45,7 +45,7 @@ function resize()
         ori_filename,
         "-thumbnail",
         szie .. "^",
-        "-quality 85 -gravity center -extent",
+        "-quality 85 -gravity center -interlace plane -extent",
         szie,
         ngx.var.file,
     }, " ")
