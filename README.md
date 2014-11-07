@@ -8,14 +8,15 @@ nginx-lua-imagemagick
 http://luajit.org/download.html
 
 
-**Nginx && lua-nginx-module**
+**Nginx && lua-nginx-module && ngx_devel_kit**
 
 http://nginx.org
-
 https://github.com/openresty/lua-nginx-module
-
+https://github.com/simpl/ngx_devel_kit
 
 **nginx compile**
+
+*Recommended use the [OpenResty](http://openresty.org/cn/index.html) project.
 
 ```
 configure \
