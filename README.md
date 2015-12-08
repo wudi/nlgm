@@ -1,11 +1,52 @@
-nginx-lua-imagemagick
+NLGM (Nginx Lua GraphicsMagick)
 =====================
 
-##Dependencies(环境依赖)
+##Dependencies
+
+**GraphicsMagick**
+
+``
+Download
+
+http://sourceforge.net/projects/graphicsmagick/files/graphicsmagick/
+
+tar zxvf  GraphicsMagick-1.3.23.tar.gz
+
+cd GraphicsMagick-1.3.23
+
+1）#yum 已经安装了 libjpeg libpng libjpeg-devel libpng-devel
+
+./configure --prefix=/path/to/graphicsmagick 
+
+2）#独立编译安装  libjpeg  libpng，  configure 需要指定 LDFLAGS  和 CPPFLAGS
+
+./configure --prefix=/path/to/graphicsmagick 'LDFLAGS=-L/path/to/jpeg/lib' 'CPPFLAGS=-I/path/to/jpeg'  'LDFLAGS=-L/path/to/png/lib' 'CPPFLAGS=-I/path/to/png' 
+
+make 
+
+-- make 结果会显示 JPEG v1、PNG  的支持情况，确保支持 JPEG v1、PNG 
+
+make install
+
+``
 
 **Lua JIT**
 
 http://luajit.org/download.html
+
+```
+tar zxvf  LuaJIT-2.0.4.tar.gz
+
+cd LuaJIT-2.0.4
+
+make
+
+make install PREFIX=/path/to/luajit-2.0/
+
+export LUAJIT_LIB=/path/to/luajit-2.0/lib
+export LUAJIT_INC=/path/to/luajit-2.0/include/luajit-2.0
+
+```
 
 
 **Nginx && lua-nginx-module && ngx_devel_kit**
@@ -21,48 +62,67 @@ https://github.com/simpl/ngx_devel_kit
 *Recommended use the [OpenResty](http://openresty.org/cn/index.html) project.
 
 ```
-configure \
+cd nginx-source
+
+./configure --prefix=/opt/nginx \
+--with-ld-opt="-Wl,-rpath,/path/to/luajit-2.0/lib" \
+--add-module=/path/to/ngx_devel_kit \
+--add-module=/path/to/lua-nginx-module
+
 ...
---add-module=/path/lua-nginx-module \
---add-module=/path/ngx_devel_kit 
 
 make && make install
+
 ```
 
-**ImageMagick**
+**Test Lua**
 
-http://www.imagemagick.org/
+``
+server {
+    listen  80;
+    server_name  localhost;
+    
+    location /lua {
+         default_type 'text/plain';
+          
+         content_by_lua ' ngx.say("Hello World!") ';
+     }
+}
+``
+
+http://domain.com/lua 
+  
+See "Hello World!" in the page.
+  
+OK!
+
 
 ##Usage
 
-Modify
+Please read `nlgm.conf` .
 
-`nginx-server.conf`
+**Notes: Nginx add module U must stop the nginx and restart. (Not -s reload!!) **
 
-1. `convert_bin`  imagemagick_install_path/bin/convert
-2. `rewrite_by_lua_file` nginx-imagemagick.lua save path
 
-if want to allow more image size, please modify the `image_sizes` variable in **nginx-imagemagick.lua**
+##Support Arguments
 
-**Don't forget reload the Nginx.**
 
+Arg | Mean 
+----|------
+s   | size  
+q   | quality  
+m   | crop mode 
+v   | show GraphicsMagick command for debug
+
+
+##TODO
+
+- [ ] Support delimiter option
+- [ ] Support more crop mode
+- [ ] Auto create directory use **ngx.thumbnail_dir**
+- [ ] Border radius
+- [ ] More features from GraphicsMagick
 
 ----------
 
-
-**original image(原始图片)**
-
-http://domain.com/cdn_assets/photo/abc.jpg
-
-**thumb image 320x320 (缩略图)**
-
-http://domain.com/cdn_assets/photo/abc_320x320.jpg
-
-**thumb image 640x640 (缩略图)**
-
-http://domain.com/cdn_assets/photo/abc_640x640.jpg
-
-**and etc.**
-
-
-
+eg: http://domain.com/t_s200x200/e3/3a/324jh3gh4jg32j4gj32g4.jpg
