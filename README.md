@@ -5,7 +5,7 @@ NLGM (Nginx Lua GraphicsMagick)
 
 **GraphicsMagick**
 
-``
+```
 Download
 
 http://sourceforge.net/projects/graphicsmagick/files/graphicsmagick/
@@ -28,7 +28,7 @@ make
 
 make install
 
-``
+```
 
 **Lua JIT**
 
@@ -57,9 +57,9 @@ https://github.com/openresty/lua-nginx-module
 
 https://github.com/simpl/ngx_devel_kit
 
-**nginx compile module useage（Nginx打模块）**
+***nginx compile module useage（Nginx打模块）***
 
-*Recommended use the [OpenResty](http://openresty.org/cn/index.html) project.
+Recommended use the [OpenResty](http://openresty.org/cn/index.html) project.
 
 ```
 cd nginx-source
@@ -77,7 +77,7 @@ make && make install
 
 **Test Lua**
 
-``
+```
 server {
     listen  80;
     server_name  localhost;
@@ -88,7 +88,7 @@ server {
          content_by_lua ' ngx.say("Hello World!") ';
      }
 }
-``
+```
 
 http://domain.com/lua 
   
