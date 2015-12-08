@@ -101,7 +101,7 @@ OK!
 
 Please read `nlgm.conf` .
 
-**Notes: Nginx add module U must stop the nginx and restart. (Not -s reload!!) **
+**Notes: Nginx add module U must stop the nginx and restart. (Not -s reload!!)**
 
 
 ##Support Arguments
