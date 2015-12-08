@@ -1,5 +1,14 @@
 NLGM (Nginx Lua GraphicsMagick)
 =====================
+Nginx 调用 Lua 脚本执行 GraphicsMagick 命令实时高效处理图片。
+
+运行模式：Nginx 将当前请求任务交给Lua 脚本，脚本内获取当前请求 URI 对所需参数进行解析转换，拼接成 GraphicsMagick 命令，并执行。结果将缩略图生成到指定目录，rewrite 缩略图路径到 Nginx。
+
+- 每个 URI 会进行 MD5 生成文件名，缓存图片，下次请求图片存在则直接返回
+- 若源文件不存在则直接返回 404
+- 注意配合 `crontab` 定时删除 thumbnail_dir 目录内一定时间内没有访问的文件
+- 可通过HTTP响应头参数 `T-Generate` 查看当前是新生成还是 cache    
+- 可通过 `v` 参数进行运行命令 DEBUG 
 
 ##Dependencies
 
